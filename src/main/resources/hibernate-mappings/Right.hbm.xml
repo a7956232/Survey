@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.yxj.entity.security">
+    <class name="Right" table="rights">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="rightName" column="rightName" type="string" length="50"/>
+        <property name="rightDesc" column="rightDesc" type="string" length="200"/>
+        <property name="rightUrl" column="rightUrl" type="string" length="200"/>
+        <property name="rightPos" column="rightPos" type="integer" update="false"/>
+        <property name="rightCode" column="rightCode" type="long" update="false"/>
+        <property name="common" column="common" type="boolean"/>
+    </class>
+</hibernate-mapping>

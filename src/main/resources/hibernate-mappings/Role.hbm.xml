@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.yxj.entity.security">
+    <class name="Role" table="roles">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="roleName" column="roleName" type="string" length="50"/>
+        <property name="roleDesc" column="roleDesc" type="string" length="200"/>
+        <property name="roleValue" column="roleValue" type="string" length="200"/>
+        
+        <!--角色到权限之间多对多关联关系-->
+        <set name="rights" table="role_right_link" lazy="false">
+            <key column="roleid"/>
+            <many-to-many class="Right" column="rightid"/>
+        </set>
+    </class>
+</hibernate-mapping>

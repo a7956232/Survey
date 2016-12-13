@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.yxj.entity.User" table="users">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="username" column="username" type="string" length="50"/>
+        <property name="password" column="password" type="string" length="50"/>
+        <property name="nickname" column="nickname" type="string" length="50"/>
+        
+        <!--用户到角色之间多对多关联关系-->
+        <set name="roles" table="user_role_link" lazy="false">
+            <key column="userid"/>
+            <many-to-many class="com.yxj.entity.security.Role" column="roleid"/>
+        </set>
+    </class>
+</hibernate-mapping>

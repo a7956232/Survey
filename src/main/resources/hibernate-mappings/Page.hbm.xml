@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.yxj.entity">
+    <class name="Page" table="pages">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="title" column="title" type="string" length="50"/>
+        <property name="orderno" type="float">
+            <!--显式指定字段类型-->
+            <column name="orderno" sql-type="decimal(10,5)"/>
+        </property>
+
+        <!--Page到Survey多对一-->
+        <many-to-one name="survey" class="Survey" column="surveyid"/>
+        <!--Page到Question一对多-->
+        <set name="questions" inverse="true" order-by="id">
+            <key column="pageid"/>
+            <one-to-many class="Question"/>
+        </set>
+    </class>
+</hibernate-mapping>

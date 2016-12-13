@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.yxj.entity">
+    <class name="Survey" table="surveys">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="title" column="title" type="string" length="50"/>
+        <property name="createTime" column="createTime" type="timestamp"/>
+        <property name="closed" column="closed" type="boolean" update="false"/>
+        <property name="logoPhotoPath" column="logoPhotoPath" type="string" length="200"/>
+        <property name="minOrderno" formula="(select min(p.orderno) from pages p where p.surveyid = id)"/>
+        <property name="maxOrderno" formula="(select max(p.orderno) from pages p where p.surveyid = id)"/>
+        <!--Survey到User多对一-->
+        <many-to-one name="user" class="User" column="userid"/>
+        <!--Survey到Page一对多,page集合按照id排序-->
+        <set name="pages" inverse="true" order-by="orderno">
+            <key column="surveyid"/>
+            <one-to-many class="Page"/>
+        </set>
+    </class>
+</hibernate-mapping>
