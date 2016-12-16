@@ -26,10 +26,10 @@ public class StringUtil {
     }
 
     //将数组转换成字符串，按照“，”分隔
-    public static String arr2Str(String[] arr) {
+    public static String arr2Str(Object[] arr) {
         String temp = "";
         if(ValidateUtil.isValid(arr)){
-            for(String s : arr){
+            for(Object s : arr){
                 temp = temp + s + ",";
             }
             return temp.substring(0,temp.length() - 1);
@@ -37,14 +37,11 @@ public class StringUtil {
         return temp;
     }
 
-    public static String arr2Str(Integer[] ids) {
-        String temp = "";
-        if(ValidateUtil.isValid(ids)){
-            for(Integer s : ids){
-                temp = temp + s + ",";
-            }
-            return temp.substring(0,temp.length() - 1);
+    //获得指定字符串的描述信息
+    public static String getDescString(String str){
+        if(str != null && str.trim().length() > 30){
+            return str.substring(0,30);
         }
-        return temp;
+        return str;
     }
 }

@@ -2,6 +2,7 @@ package com.yxj.dao.impl;
 
 import com.yxj.dao.BaseDao;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.SessionFactory;
 
 import javax.annotation.Resource;
@@ -78,5 +79,27 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T>{
             q.setParameter(i,objects[i]);
         }
         return q.uniqueResult();
+    }
+
+    @Override
+    public void executeSQL(String sql, Object... objects) {
+        SQLQuery q = sf.getCurrentSession().createSQLQuery(sql);
+        for(int i=0;i<objects.length;i++){
+            q.setParameter(i,objects[i]);
+        }
+        q.executeUpdate();
+    }
+
+    @Override
+    public List executeSQLQuery(Class clazz,String sql, Object... objects) {
+        SQLQuery q = sf.getCurrentSession().createSQLQuery(sql);
+        //增加实体类
+        if(clazz != null){
+            q.addEntity(clazz);
+        }
+        for(int i=0;i<objects.length;i++){
+            q.setParameter(i,objects[i]);
+        }
+        return q.list();
     }
 }

@@ -61,6 +61,9 @@
           <element id="library" level="project" name="Maven: jfree:jcommon:1.0.12" />
           <element id="library" level="project" name="Maven: org.apache.struts:struts2-jfreechart-plugin:2.3.15.3" />
           <element id="library" level="project" name="Maven: javax.servlet.jsp:jsp-api:2.2.1-b03" />
+          <element id="library" level="project" name="Maven: com.opensymphony.quartz:com.springsource.org.quartz:1.6.2" />
+          <element id="library" level="project" name="Maven: org.apache.commons:com.springsource.org.apache.commons.collections:3.2.0" />
+          <element id="library" level="project" name="Maven: org.apache.commons:com.springsource.org.apache.commons.logging:1.1.1" />
         </element>
       </element>
       <element id="directory" name="META-INF">

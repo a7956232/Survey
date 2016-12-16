@@ -76,4 +76,14 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
         String hql = "from "+clazz.getSimpleName();
         return this.findEntityByHQL(hql);
     }
+
+    @Override
+    public void executeSQL(String sql, Object... objects) {
+        dao.executeSQL(sql,objects);
+    }
+
+    @Override
+    public List executeSQLQuery(Class clazz,String sql, Object... objects) {
+        return dao.executeSQLQuery(clazz,sql,objects);
+    }
 }

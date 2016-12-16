@@ -7,6 +7,9 @@
     <constant name="struts.ui.theme" value="simple"/>
     <!--开发模式-->
     <constant name="struts.devMode" value="true"/>
+    <!--允许静态方法访问-->
+    <constant name="struts.ognl.allowStaticMethodAccess" value="true"/>
+
     <!--多重继承JfreeChart插件包，以使用Struts2整合JfreeChart插件输出图表-->
     <package name="survey" extends="struts-default,jfreechart-default" namespace="/">
 

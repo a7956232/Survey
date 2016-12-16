@@ -13,6 +13,7 @@
     <style type="text/css">
         table{border: solid #000 1px;padding: 0px;width: 1500px;margin: 0 auto;}
         td{border: solid #c4372e 1px;}
+        th{border: solid #c4372e 1px;}
     </style>
 </head>
 <body>
@@ -24,6 +25,7 @@
     <s:a action="userAuthorize_findAllUsers">用户授权</s:a>&nbsp;
     <s:a action="role_findAllRoles">角色管理</s:a>&nbsp;
     <s:a action="right_findAllRights">权限管理</s:a>&nbsp;
+    <s:a action="log_findNearestLogs">日志管理</s:a>&nbsp;
     <s:a action="login_logout" namespace="/">注销登录</s:a>&nbsp;
 
 </div>

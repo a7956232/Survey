@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.yxj.entity">
+    <class name="Log" table="logs">
+        <id name="id" column="id" type="string">
+            <generator class="uuid"/>
+        </id>
+        <property name="operator" column="operator" type="string" length="100"/>
+        <property name="operName" column="operName" type="string" length="100"/>
+        <property name="operParams" column="operParams" type="string" length="500"/>
+        <property name="operResult" column="operResult" type="string" length="50"/>
+        <property name="resultMsg" column="resultMsg" type="string" length="500"/>
+        <property name="operTime" column="operTime" type="timestamp"/>
+    </class>
+</hibernate-mapping>

@@ -51,8 +51,23 @@
         </tx:attributes>
     </tx:advice>
 
+    <!--日志记录仪-->
+    <bean id="logger" class="com.yxj.advice.Logger"/>
+    <!--aop配置-->
     <aop:config>
+        <!--事务切入点通知-->
         <aop:advisor advice-ref="txAdvice" pointcut="execution(* *..*Service.*(..))"/>
+        <!--Logger切面-->
+        <aop:aspect id="loggerAspect" ref="logger">
+            <aop:around method="record" pointcut="(execution(* *..*Service.save*(..))
+                                                    or execution(* *..*Service.update*(..))
+                                                    or execution(* *..*Service.delete*(..))
+                                                    or execution(* *..*Service.batch*(..))
+                                                    or execution(* *..*Service.new*(..))
+                                                    or execution(* *..*Service.move*(..))
+                                                    or execution(* *..*Service.clear*(..))
+                                                    or execution(* *..*Service.toggle*(..)))
+                                                    and !bean(logService)"/>
+        </aop:aspect>
     </aop:config>
-
 </beans>

@@ -226,6 +226,11 @@
       <artifactId>jsp-api</artifactId>
       <version>2.2.1-b03</version>
     </dependency>
+    <dependency>
+      <groupId>com.opensymphony.quartz</groupId>
+      <artifactId>com.springsource.org.quartz</artifactId>
+      <version>1.6.2</version>
+    </dependency>
   </dependencies>
   <build>
     <finalName>survey</finalName>
