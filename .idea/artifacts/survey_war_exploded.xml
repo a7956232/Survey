@@ -64,6 +64,7 @@
           <element id="library" level="project" name="Maven: com.opensymphony.quartz:com.springsource.org.quartz:1.6.2" />
           <element id="library" level="project" name="Maven: org.apache.commons:com.springsource.org.apache.commons.collections:3.2.0" />
           <element id="library" level="project" name="Maven: org.apache.commons:com.springsource.org.apache.commons.logging:1.1.1" />
+          <element id="library" level="project" name="Maven: net.sourceforge.ehcache:com.springsource.net.sf.ehcache:1.6.2" />
         </element>
       </element>
       <element id="directory" name="META-INF">

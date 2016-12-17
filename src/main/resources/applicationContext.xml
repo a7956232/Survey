@@ -2,9 +2,9 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
-       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:cache="http://www.springframework.org/schema/cache"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+        http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
 
     <context:property-placeholder location="classpath:jdbc.properties"/>
 
@@ -69,14 +69,50 @@
         </tx:attributes>
     </tx:advice>
 
+    <!--缓存管理器-->
+    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
+        <property name="cacheManager" ref="ehCacheManagerFactoryBean"/>
+    </bean>
+
+    <!--缓存管理器工厂bean-->
+    <bean id="ehCacheManagerFactoryBean" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+        <property name="configLocation" value="classpath:ehcache.xml"/>
+    </bean>
+
+    <!--自定义缓存key生成器-->
+    <bean id="surveyKeyGenerator" class="com.yxj.cache.SurveyKeyGenerator"/>
+
+    <!--缓存通知-->
+    <cache:advice id="cacheAdvice" cache-manager="cacheManager" key-generator="surveyKeyGenerator">
+        <cache:caching cache="survey">
+            <cache:cacheable method="get*"/>
+            <cache:cacheable method="load*"/>
+            <cache:cacheable method="find*"/>
+            <cache:cache-evict method="save*" all-entries="true"/>
+            <cache:cache-evict method="update*" all-entries="true"/>
+            <cache:cache-evict method="delete*" all-entries="true"/>
+            <cache:cache-evict method="clear*" all-entries="true"/>
+            <cache:cache-evict method="toggle*" all-entries="true"/>
+            <cache:cache-evict method="move*" all-entries="true"/>
+            <cache:cache-evict method="batch*" all-entries="true"/>
+            <cache:cache-evict method="execute*" all-entries="true"/>
+        </cache:caching>
+    </cache:advice>
+
     <!--日志记录仪-->
     <bean id="logger" class="com.yxj.advice.Logger"/>
+
     <!--aop配置-->
     <aop:config>
         <!--事务切入点通知-->
-        <aop:advisor advice-ref="txAdvice" pointcut="execution(* *..*Service.*(..))" order="1"/>
+        <aop:advisor advice-ref="txAdvice" pointcut="execution(* *..*Service.*(..))" order="2"/>
+
+        <aop:advisor advice-ref="cacheAdvice" pointcut="execution(* *..*Service.get*(..))
+                                                            or execution(* *..*Service.load*(..))
+                                                            or execution(* *..*Service.find*(..))" order="0"/>
+
         <!--Logger切面-->
-        <aop:aspect id="loggerAspect" ref="logger" order="0">
+        <aop:aspect id="loggerAspect" ref="logger" order="1">
             <aop:around method="record" pointcut="(execution(* *..*Service.save*(..))
                                                     or execution(* *..*Service.update*(..))
                                                     or execution(* *..*Service.delete*(..))

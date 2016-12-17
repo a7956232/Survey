@@ -115,5 +115,6 @@
     <orderEntry type="library" name="Maven: com.opensymphony.quartz:com.springsource.org.quartz:1.6.2" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:com.springsource.org.apache.commons.collections:3.2.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:com.springsource.org.apache.commons.logging:1.1.1" level="project" />
+    <orderEntry type="library" name="Maven: net.sourceforge.ehcache:com.springsource.net.sf.ehcache:1.6.2" level="project" />
   </component>
 </module>

@@ -17,8 +17,6 @@ import javax.annotation.Resource;
 @Service("statisticsService")
 public class StatisticsServiceImpl implements StatisticsService{
 
-    @Resource(name = "questionDao")
-    private BaseDao<Question> questionDao;
     @Resource(name = "answerDao")
     private BaseDao<Answer> answerDao;
 
