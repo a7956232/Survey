@@ -1,5 +1,6 @@
 package com.yxj.service;
 
+import com.yxj.entity.Question;
 import com.yxj.entity.statistics.QuestionStatisticsModel;
 
 /**
@@ -7,5 +8,5 @@ import com.yxj.entity.statistics.QuestionStatisticsModel;
  */
 //统计服务
 public interface StatisticsService {
-    public QuestionStatisticsModel statistics(Integer qid);
+    public QuestionStatisticsModel statistics(Question q);
 }

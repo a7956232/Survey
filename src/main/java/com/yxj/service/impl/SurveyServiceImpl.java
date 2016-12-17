@@ -227,6 +227,12 @@ public class SurveyServiceImpl implements SurveyService {
         }
     }
 
+    @Override
+    public Survey getSurveyByQid(Integer qid) {
+        Question q = this.getQuestion(qid);
+        return q.getPage().getSurvey();
+    }
+
     //设置页序
     private void setOrderno(Page srcPage, Page tarPage, int pos) {
         if(pos == 0){

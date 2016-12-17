@@ -1,9 +1,13 @@
 package com.yxj.action;
 
+import com.yxj.dataSource.SurveyToken;
 import com.yxj.entity.Page;
+import com.yxj.entity.Question;
+import com.yxj.entity.Survey;
 import com.yxj.entity.statistics.OptionStatisticsModel;
 import com.yxj.entity.statistics.QuestionStatisticsModel;
 import com.yxj.service.StatisticsService;
+import com.yxj.service.SurveyService;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
@@ -42,10 +46,21 @@ public class ChartOutputAction extends BaseAction<Page>{
     private static final int CHARTTYPE_LINE_3D = 7;
     //问题id
     private Integer qid;
+    private Integer sid;
     //图表类型
     private int chartType;
     @Resource
     private StatisticsService ss;
+    @Resource
+    private SurveyService surveyService;
+
+    public Integer getSid() {
+        return sid;
+    }
+
+    public void setSid(Integer sid) {
+        this.sid = sid;
+    }
 
     public Integer getQid() {
         return qid;
@@ -101,7 +116,15 @@ public class ChartOutputAction extends BaseAction<Page>{
         try {
             //Font font = new Font("宋体",Font.BOLD,25);
             //统计问题
-            QuestionStatisticsModel qsm = ss.statistics(qid);
+            Question q = surveyService.getQuestion(qid);
+            Survey survey = surveyService.getSurvey(sid);
+            //绑定token到当前线程
+            SurveyToken token = new SurveyToken();
+            //设置当前survey到token中
+            token.setSurvey(survey);
+            //绑定令牌
+            SurveyToken.bindToken(token);
+            QuestionStatisticsModel qsm = ss.statistics(q);
             DefaultPieDataset pieds = null;//饼图数据集
             DefaultCategoryDataset cateds = null;//种类数据集
             //构造数据集

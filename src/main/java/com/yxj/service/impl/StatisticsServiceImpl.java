@@ -23,9 +23,9 @@ public class StatisticsServiceImpl implements StatisticsService{
     private BaseDao<Answer> answerDao;
 
     @Override
-    public QuestionStatisticsModel statistics(Integer qid) {
+    public QuestionStatisticsModel statistics(Question q) {
         //设置被统计的问题
-        Question q = questionDao.getEntity(qid);
+        Integer qid = q.getId();
         QuestionStatisticsModel qsm = new QuestionStatisticsModel();
         qsm.setQuestion(q);
 

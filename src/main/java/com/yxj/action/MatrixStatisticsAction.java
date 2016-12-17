@@ -1,9 +1,13 @@
 package com.yxj.action;
 
+import com.yxj.dataSource.SurveyToken;
 import com.yxj.entity.Page;
+import com.yxj.entity.Question;
+import com.yxj.entity.Survey;
 import com.yxj.entity.statistics.OptionStatisticsModel;
 import com.yxj.entity.statistics.QuestionStatisticsModel;
 import com.yxj.service.StatisticsService;
+import com.yxj.service.SurveyService;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
@@ -19,6 +23,7 @@ public class MatrixStatisticsAction extends BaseAction<Page>{
     private static final long serialVersionUID = -7936963347293412824L;
 
     private Integer qid;
+    private Integer sid;
     private QuestionStatisticsModel qsm;
     private String[] colors = {
             "#ff0000",
@@ -30,6 +35,8 @@ public class MatrixStatisticsAction extends BaseAction<Page>{
     };
     @Resource
     private StatisticsService ss;
+    @Resource
+    private SurveyService surveyService;
 
     public String[] getColors() {
         return colors;
@@ -37,6 +44,14 @@ public class MatrixStatisticsAction extends BaseAction<Page>{
 
     public void setColors(String[] colors) {
         this.colors = colors;
+    }
+
+    public Integer getSid() {
+        return sid;
+    }
+
+    public void setSid(Integer sid) {
+        this.sid = sid;
     }
 
     public Integer getQid() {
@@ -58,7 +73,15 @@ public class MatrixStatisticsAction extends BaseAction<Page>{
     @Override
     public String execute() throws Exception {
         //先进行统计
-        this.qsm = ss.statistics(qid);
+        Question q = surveyService.getQuestion(qid);
+        Survey survey = surveyService.getSurvey(sid);
+        //绑定token到当前线程
+        SurveyToken token = new SurveyToken();
+        //设置当前survey到token中
+        token.setSurvey(survey);
+        //绑定令牌
+        SurveyToken.bindToken(token);
+        this.qsm = ss.statistics(q);
         return ""+qsm.getQuestion().getQuestionType();
     }
 

@@ -39,6 +39,7 @@
                             <td align="right">
                                 <s:form action="chartOutput" namespace="/" method="POST" target="_blank">
                                     <input type="hidden" name="qid" value="<s:property value='#qId'/>">
+                                    <input type="hidden" name="sid" value="<s:property value='#sId'/>">
                                     <s:if test="#qt > 5">
                                         <%--提交给另外一个action，改变form的提交地址--%>
                                         <s:submit action="matrixStatistics" value="查看矩阵式问题统计结果"/>

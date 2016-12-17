@@ -1,5 +1,6 @@
 package com.yxj.action;
 
+import com.yxj.dataSource.SurveyToken;
 import com.yxj.entity.Answer;
 import com.yxj.entity.Page;
 import com.yxj.entity.Survey;
@@ -106,6 +107,13 @@ public class EngageSurveyAction extends BaseAction<Survey> implements ServletCon
         }else if(submitName.endsWith("done")){
             //完成
             mergeParamsIntoSession();
+            //绑定token到当前线程
+            SurveyToken token = new SurveyToken();
+            //设置当前survey到token中
+            token.setSurvey(getCurrSurvey());
+            //绑定令牌
+            SurveyToken.bindToken(token);
+
             surveyService.saveAnswers(processAnswers());
             clearSessionData();
             ActionUtil.setUrl("/engageSurvey_toEngageSurveyList");

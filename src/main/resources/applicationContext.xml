@@ -9,7 +9,7 @@
     <context:property-placeholder location="classpath:jdbc.properties"/>
 
     <context:component-scan base-package="com.yxj.dao.impl,com.yxj.service.impl,com.yxj.action,com.yxj.listener"/>
-    <!--c3p0连接池-->
+    <!--c3p0连接池,主数据源-->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <property name="driverClass" value="${jdbc.driver}"/>
         <property name="jdbcUrl" value="${jdbc.url}"/>
@@ -17,9 +17,27 @@
         <property name="password" value="${jdbc.password}"/>
     </bean>
 
+    <!--c3p0连接池,从数据源-->
+    <bean id="dataSource-1" parent="dataSource">
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/survey_1?useUnicode=true&amp;characterEncoding=utf8"/>
+    </bean>
+
+    <!--自定义数据源路由器-->
+    <bean id="dataSourceRouter" class="com.yxj.dataSource.SurveyDataSourceRouter">
+        <!--目标数据源集-->
+        <property name="targetDataSources">
+            <map>
+                <entry key="odd" value-ref="dataSource"/>
+                <entry key="even" value-ref="dataSource-1"/>
+            </map>
+        </property>
+        <!--默认数据源-->
+        <property name="defaultTargetDataSource" ref="dataSource"/>
+    </bean>
+
     <!-- Hibernate -->
     <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
-        <property name="dataSource" ref="dataSource"/>
+        <property name="dataSource" ref="dataSourceRouter"/>
         <property name="configLocation" value="classpath:hibernate.cfg.xml"/>
         <property name="mappingDirectoryLocations">
             <list>
@@ -56,9 +74,9 @@
     <!--aop配置-->
     <aop:config>
         <!--事务切入点通知-->
-        <aop:advisor advice-ref="txAdvice" pointcut="execution(* *..*Service.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut="execution(* *..*Service.*(..))" order="1"/>
         <!--Logger切面-->
-        <aop:aspect id="loggerAspect" ref="logger">
+        <aop:aspect id="loggerAspect" ref="logger" order="0">
             <aop:around method="record" pointcut="(execution(* *..*Service.save*(..))
                                                     or execution(* *..*Service.update*(..))
                                                     or execution(* *..*Service.delete*(..))

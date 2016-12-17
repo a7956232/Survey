@@ -73,4 +73,6 @@ public interface SurveyService {
 
     //批量保存答案
     void saveAnswers(List<Answer> answers);
+
+    Survey getSurveyByQid(Integer qid);
 }
