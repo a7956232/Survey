@@ -2,6 +2,7 @@ package com.yxj.entity.statistics;
 
 import com.yxj.entity.Question;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +10,8 @@ import java.util.List;
  * Created by 95 on 2016/11/29.
  */
 //问题统计模型
-public class QuestionStatisticsModel {
+public class QuestionStatisticsModel implements Serializable{
+    private static final long serialVersionUID = -3105919481265514026L;
     //被统计的问题
     private Question question;
     //回答该问题的人数

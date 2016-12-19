@@ -107,9 +107,8 @@
         <!--事务切入点通知-->
         <aop:advisor advice-ref="txAdvice" pointcut="execution(* *..*Service.*(..))" order="2"/>
 
-        <aop:advisor advice-ref="cacheAdvice" pointcut="execution(* *..*Service.get*(..))
-                                                            or execution(* *..*Service.load*(..))
-                                                            or execution(* *..*Service.find*(..))" order="0"/>
+        <!--缓存切入点通知-->
+        <aop:advisor advice-ref="cacheAdvice" pointcut="execution(* *..*Service.*(..))" order="0"/>
 
         <!--Logger切面-->
         <aop:aspect id="loggerAspect" ref="logger" order="1">

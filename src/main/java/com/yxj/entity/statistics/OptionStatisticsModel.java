@@ -1,10 +1,13 @@
 package com.yxj.entity.statistics;
 
+import java.io.Serializable;
+
 /**
  * Created by 95 on 2016/11/29.
  */
 //选项统计模型
-public class OptionStatisticsModel {
+public class OptionStatisticsModel implements Serializable {
+    private static final long serialVersionUID = -3296081538295974737L;
     //选项索引
     private int optionIndex;
     //选项标签

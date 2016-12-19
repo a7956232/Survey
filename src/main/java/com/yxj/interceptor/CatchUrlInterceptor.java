@@ -3,6 +3,7 @@ package com.yxj.interceptor;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.ActionProxy;
 import com.opensymphony.xwork2.interceptor.Interceptor;
+import com.yxj.entity.security.Right;
 import com.yxj.service.RightService;
 import com.yxj.util.ValidateUtil;
 import org.apache.struts2.ServletActionContext;
@@ -11,6 +12,7 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import javax.servlet.ServletContext;
+import java.util.Map;
 
 /**
  * Created by 95 on 2016/12/2.
@@ -45,7 +47,10 @@ public class CatchUrlInterceptor implements Interceptor{
         ServletContext sc = ServletActionContext.getServletContext();
         ApplicationContext ac = WebApplicationContextUtils.getWebApplicationContext(sc);
         RightService rs = (RightService) ac.getBean("rightService");
-        rs.appendRightByUrl(url);
+        Map<String,Right> map = (Map<String, Right>) sc.getAttribute("all_rights_map");
+        if(!map.containsKey(url)){
+            rs.appendRightByUrl(url);
+        }
         return actionInvocation.invoke();
     }
 }

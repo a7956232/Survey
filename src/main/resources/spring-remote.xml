@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--service导出器，将pojo转换成spring所需的controller对象-->
+    <bean name="/ss.service" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+        <property name="serviceInterface">
+            <value>com.yxj.service.StatisticsService</value>
+        </property>
+        <property name="service" ref="statisticsService"/>
+    </bean>
+
+    <!--客户端代理配置-->
+    <!--<bean id="ssClient" class="org.springframework.remoting.httpinvoker.HttpInvokerClientInterceptor">
+        <property name="serviceInterface">
+            <value>com.yxj.service.StatisticsService</value>
+        </property>
+        <property name="serviceUrl">
+            <value>http://localhost:8080/survey/ss.service</value>
+        </property>
+    </bean>-->
+</beans>
